@@ -1,0 +1,10 @@
+.product-box h4 {
+    max-width: 30ch;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.product-box img {
+    width: 300px;
+    height: 300px;
+}

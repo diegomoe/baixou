@@ -5,6 +5,10 @@ $(document).ready(function () {
 
     var date, aux, x, errado, text = "";
 
+    if (!localStorage.token) {
+        localStorage.token = "";
+    }
+
     if (localStorage.token == "") {
         $.ajax({
             type: 'POST',
@@ -14,9 +18,14 @@ $(document).ready(function () {
                 aux = data.token;
                 if (aux != null) {
                     localStorage.token = data.token;
+                    localStorage.aux = localStorage.token;
                 }
-            }
+            },
         });
+    }
+
+    if (aux == null) {
+        localStorage.token = localStorage.aux;
     }
 
     $.ajax({
@@ -24,8 +33,6 @@ $(document).ready(function () {
         url: "http://testedev.baixou.com.br/processo/lista?token=" + localStorage.token,
         success: function (dados) {
             for (var i = 0; dados.ofertas.length > i; i++) {
-                //Adicionando registros retornados na tabela
-                // $('.conteudo').append('<tr><td>' + dados.ofertas[i].titulo + '</td><td>' + dados.ofertas[i].imagem + '</td><td>' + dados.ofertas[i].preco + '</td></tr>');
                 text = dados.ofertas[i].titulo;
                 text = text.toUpperCase();
                 if (dados.ofertas[i].nparcela != null) {
@@ -53,22 +60,15 @@ $(document).ready(function () {
                         '            <button type="button" class="btn btn-success">Comprar</button>' +
                         '       </div>' +
                         '    </div>' +
-                        '</div>');
+                        '</div>'
+                    );
                 }
             }
-            // errado = dados.error;
-            if (errado == "Token não informada.") {
-                errado = "";
-                atualizaStorage();
+            if (dados.error == "Token expirada.") {
+                localStorage.token = "";
             }
         },
     });
-
-
-    function atualizaStorage() {
-        localStorage.token = "";
-        location.reload();
-    }
 
     $("#pesquisa").keyup(function () {
         var stringPesquisa = $(this).val();
@@ -76,6 +76,5 @@ $(document).ready(function () {
         $('.product-box').parent().hide();
         $('.product-box:contains(' + stringPesquisa + ')').parent().show()
     });
-
 
 });

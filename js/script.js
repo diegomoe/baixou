@@ -35,15 +35,19 @@ $(document).ready(function () {
             for (var i = 0; dados.ofertas.length > i; i++) {
                 text = dados.ofertas[i].titulo;
                 text = text.toUpperCase();
+                var valor = dados.ofertas[i].preco;
+                var texto = valor.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
                 if (dados.ofertas[i].nparcela != null) {
+                    valor = dados.ofertas[i].vparcela;
+                    var texto2 = valor.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
                     $('.conteudo').append(
                         '<div class="col-md-4 text-center col-sm-6 col-xs-12">' +
                         '   <div class="thumbnail product-box">' +
                         '       <img title="' + text + '" src="' + dados.ofertas[i].imagem + '" alt="website template image" />' +
                         '       <div class="caption">' +
                         '            <h4 title="' + text + '"><a href="#">' + text + '</a></h4>' +
-                        '            <p>PREÇO :<strong> R$ ' + dados.ofertas[i].preco + '</strong></p>' +
-                        '            <p>' + dados.ofertas[i].nparcela + ' x ' + dados.ofertas[i].vparcela + '</p>' +
+                        '            <p>PREÇO :<strong> ' + texto + '</strong></p>' +
+                        '            <p>' + dados.ofertas[i].nparcela + ' x ' + texto2 + '</p>' +
                         '            <button type="button" class="btn btn-success">Comprar</button>' +
                         '       </div>' +
                         '    </div>' +
@@ -55,7 +59,7 @@ $(document).ready(function () {
                         '       <img title="' + text + '" src="' + dados.ofertas[i].imagem + '" alt="website template image" />' +
                         '       <div class="caption">' +
                         '            <h4 title="' + text + '"><a href="#">' + text + '</a></h4>' +
-                        '            <p>PREÇO :<strong> R$ ' + dados.ofertas[i].preco + '</strong></p>' +
+                        '            <p>PREÇO :<strong> ' + texto + '</strong></p>' +
                         '            <p> &nbsp;</p>' +
                         '            <button type="button" class="btn btn-success">Comprar</button>' +
                         '       </div>' +

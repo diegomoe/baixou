@@ -64,7 +64,7 @@ $(document).ready(function () {
                     );
                 }
             }
-            if (dados.error == "Token expirada.") {
+            if (dados.error == "Token expirada." || dados.error == "Token inválida.") {
                 localStorage.token = "";
             }
         },
